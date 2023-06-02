@@ -1,50 +1,139 @@
-'use strict';
+'use strict'
 
 // Data needed for a later exercise
-const flights =
-  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
+// const flights =
+//   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
-const weekdays = ['mon', 'tue', 'wed', 'thur', 'fri', 'sat', 'sun'];
-const openingHours = {
-  [weekdays[3]]: {
-    open: 12,
-    close: 22,
-  },
-  [weekdays[4]]: {
-    open: 11,
-    close: 23,
-  },
-  [weekdays[5]]: {
-    open: 0, // Open 24 hours
-    close: 24,
-  },
-};
 
-// Data needed for first part of the section
+//Data needed for first part of the section
 const restaurant = {
-  name: 'Classico Italiano',
-  location: 'Via Angelo Tavanti 23, Firenze, Italy',
-  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
-  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
-  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+    name: 'Classico Italiano',
+    location: 'Via Angelo Tavanti 23, Firenze, Italy',
+    categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+    starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+    mainMenu: ['Pizza', 'Pasta', 'Risotto'],
 
-  //ES6 enhanced object literals
-  openingHours,
+    openingHours: {
+        thu: {
+            open: 12,
+            close: 22,
+        },
+        fri: {
+            open: 11,
+            close: 23,
+        },
+        sat: {
+            open: 0, // Open 24 hours
+            close: 24,
+        },
+    },
 
-  order(starterIndex, mainIndex) {
-    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
-  },
+    order: function (starterIndex, mainIndex) {
+        return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]]
+    },
+    orderDelivery: function ({starterIndex = 1, mainIndex = 0, time = '20:00', address}) {
+        console.log(`Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`)
+    },
 
-  orderDelivery({ starterIndex = 1, mainIndex = 0, time = '20:00', address }) {
-    // console.log(`Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]}
-    // will be delivered to ${address} at ${time}`);
-  },
+    orderPasta: function (ing1, ing2, ing3) {
+        console.log(`Here is your delicious patas with ${ing1}, ${ing2} and ${ing3}`)
+    }
 
-  orderPizza(mainIngredient, ...otherIngredients) {
-    console.log(mainIngredient);
-    console.log(otherIngredients);
-  },
+
 };
+
+restaurant.orderDelivery({
+    time: '22:30',
+    address: 'Via del Sole, 21',
+    mainIndex: 2,
+    starterIndex: 2,
+})
+
+restaurant.orderDelivery({
+    address: 'Via del Sole, 21',
+    starterIndex: 1,
+})
+
+
+const {name, openingHours, categories} = restaurant
+// console.log(name, openingHours, categories)
+
+const {name: restaurantName, openingHours: hours, categories: tags} = restaurant
+// console.log(restaurantName, hours, tags)
+
+//Default values
+const {menu = [], starterMenu: starters = []} = restaurant
+// console.log(menu, starters)
+
+//Mutating variables
+
+let a = 111;
+let b = 999;
+const obj = {a: 23, b: 7, c: 14};
+({a, b} = obj);
+// console.log(a,b)
+
+//Nested objects
+const {fri: {open: o, close: c}} = openingHours
+// console.log(o, c)
+
+const arr = [7, 8, 9];
+const newArr = [1, 2, ...arr]
+console.log(newArr)
+
+console.log(...newArr)
+
+const newMenu = [...restaurant.mainMenu, 'Gnochhi']
+console.log(newMenu);
+
+//Copy array
+const mainMenyCopy = [...restaurant.mainMenu];
+
+//Join 2 arrays
+const menuJoined = [...restaurant.mainMenu, ...restaurant.starterMenu]
+console.log(menuJoined)
+
+//Iterables arrays, strings, maps, sets, NOT Objects
+const str = 'Jonas';
+const letters = [...str, '', 'S.'];
+console.log(letters)
+console.log(...str);
+
+// const ingredients = [prompt('Let\s make pasta! Ingredient 1?'),
+//     prompt('Let\s make pasta! Ingredient 2?'),
+//     prompt('Let\s make pasta! Ingredient 3?')];
+
+// console.log(ingredients)
+//
+// restaurant.orderPasta(...ingredients)
+
+//Objects
+const newRestaurant = {foundingYear: 1998, ...restaurant, founder:'Guiseppe'}
+console.log(newRestaurant)
+
+const restaurantCopy = {...restaurant};
+restaurantCopy.name = 'Ristorante Roma';
+console.log(restaurantCopy.name);
+console.log(restaurant.name);
+
+
+//   //ES6 enhanced object literals
+//   openingHours,
+
+//   order(starterIndex, mainIndex) {
+//     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+//   },
+
+//   orderDelivery({ starterIndex = 1, mainIndex = 0, time = '20:00', address }) {
+//     // console.log(`Order received! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]}
+//     // will be delivered to ${address} at ${time}`);
+//   },
+
+//   orderPizza(mainIngredient, ...otherIngredients) {
+//     console.log(mainIngredient);
+//     console.log(otherIngredients);
+//   },
+// };
 
 // //Split
 // console.log('a+very+nice+string'.split('+'));
@@ -74,25 +163,25 @@ const restaurant = {
 // console.log(message.padStart(20, '+').padEnd(35, '+'));
 // console.log('Jonas'.padStart(20, '+').padEnd(35, '+'));
 
-const maskCreditCard = function (number) {
-  const str = number + '';
-  const last = str.slice(-4);
-  return last.padStart(str.length, '*');
-};
+// const maskCreditCard = function (number) {
+//   const str = number + '';
+//   const last = str.slice(-4);
+//   return last.padStart(str.length, '*');
+// };
 
-console.log(maskCreditCard(4377839939398490));
+// console.log(maskCreditCard(4377839939398490));
 
-//Repeat
-const message2 = 'Bad weather....All Departures Delayed... ';
-console.log(message2.repeat(5));
+// //Repeat
+// const message2 = 'Bad weather....All Departures Delayed... ';
+// console.log(message2.repeat(5));
 
-const planesInLine = function (n) {
-  console.log(`There are ${n} planes in line ${'✈️'.repeat(n)}`);
-};
+// const planesInLine = function (n) {
+//   console.log(`There are ${n} planes in line ${'✈️'.repeat(n)}`);
+// };
 
-planesInLine(5);
-planesInLine(3);
-planesInLine(12);
+// planesInLine(5);
+// planesInLine(3);
+// planesInLine(12);
 
 // maskCreditCard('4377839939398490');
 
@@ -371,17 +460,17 @@ planesInLine(12);
 // console.log(rest1);
 // console.log(rest2);
 
-restaurant.orderDelivery({
-  time: '22:30',
-  address: 'Via del Sole, 21',
-  mainIndex: 2,
-  starterIndex: 2,
-});
+// restaurant.orderDelivery({
+//   time: '22:30',
+//   address: 'Via del Sole, 21',
+//   mainIndex: 2,
+//   starterIndex: 2,
+// });
 
-restaurant.orderDelivery({
-  address: 'Via del Sole, 21',
-  starterIndex: 1,
-});
+// restaurant.orderDelivery({
+//   address: 'Via del Sole, 21',
+//   starterIndex: 1,
+// });
 
 // const {
 //   name: restaurantName,
@@ -444,13 +533,13 @@ restaurant.orderDelivery({
 // const arr = [1, 2, ...[3, 4]];
 
 //REST, because on LEFT side of =
-const [a, b, ...others] = [1, 2, 3, 4, 5];
-// console.log(a, b, others);
+// const [a, b, ...others] = [1, 2, 3, 4, 5];
+// // console.log(a, b, others);
 
-const [pizza, , risotto, ...otherFood] = [
-  ...restaurant.mainMenu,
-  ...restaurant.starterMenu,
-];
+// const [pizza, , risotto, ...otherFood] = [
+//   ...restaurant.mainMenu,
+//   ...restaurant.starterMenu,
+// ];
 
 // console.log(pizza, risotto, otherFood);
 
@@ -459,18 +548,18 @@ const [pizza, , risotto, ...otherFood] = [
 // console.log(weekdays);
 
 //2) Functions
-const add = function (...numbers) {
-  let sum = 0;
-  for (let i = 0; i < numbers.length; i++) sum += numbers[i];
-  // console.log(sum);
-};
+// const add = function (...numbers) {
+//   let sum = 0;
+//   for (let i = 0; i < numbers.length; i++) sum += numbers[i];
+//   // console.log(sum);
+// };
 
-add(2, 3);
-add(5, 3, 7, 2);
-add(8, 2, 3, 4, 5, 6, 7);
+// add(2, 3);
+// add(5, 3, 7, 2);
+// add(8, 2, 3, 4, 5, 6, 7);
 
-const x = [23, 5, 7];
-add(...x);
+// const x = [23, 5, 7];
+// add(...x);
 
 // restaurant.orderPizza('mushrooms', 'onion', 'olives', 'spinach');
 // restaurant.orderPizza('mushrooms');
@@ -487,11 +576,11 @@ add(...x);
 // console.log(undefined || 0 || '' || 'hello' || 23 || null);
 
 // restaurant.numGuests = 23;
-const guests1 = restaurant.numGuests ? restaurant.numGuests : 10;
+// const guests1 = restaurant.numGuests ? restaurant.numGuests : 10;
 
-// console.log(guests1);
+// // console.log(guests1);
 
-const guests2 = restaurant.numGuests || 10;
+// const guests2 = restaurant.numGuests || 10;
 // console.log(guests2);
 
 // console.log('--- AND -----');
@@ -506,10 +595,23 @@ const guests2 = restaurant.numGuests || 10;
 
 // restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach');
 
-restaurant.numGuests = 0;
-const guests = restaurant.numGuests || 10;
-// console.log(guests);
+// restaurant.numGuests = 0;
+// const guests = restaurant.numGuests || 10;
+// // console.log(guests);
 
-//Nullish: null and undefined (NOT 0 or '')
-const guestsCorrect = restaurant.numGuests ?? 10;
+// //Nullish: null and undefined (NOT 0 or '')
+// const guestsCorrect = restaurant.numGuests ?? 10;
 // console.log(guestsCorrect);
+
+// function randomString(length, chars) {
+//   var result = ''
+//   for (var i = length; i > 0; --i)
+//     result += chars[Math.floor(Math.random() * chars.length)]
+//   return result
+// }
+// console.log(
+//   (rString = randomString(
+//     32,
+//     '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
+//   )),
+// )

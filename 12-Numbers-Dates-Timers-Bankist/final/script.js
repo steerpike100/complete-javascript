@@ -323,6 +323,8 @@ btnLoan.addEventListener("click", function (e) {
       // Add loan date
       currentAccount.movementsDates.push(new Date().toISOString());
 
+
+
       // Update UI
       updateUI(currentAccount);
 
@@ -626,3 +628,11 @@ setInterval(function () {
   console.log(now);
 }, 1000);
 */
+
+const options = {
+  style:"currency",
+  currency:"EUR",
+}
+
+const num = 3884764.23;
+console.log(new Intl.NumberFormat('en-US').format(num));
